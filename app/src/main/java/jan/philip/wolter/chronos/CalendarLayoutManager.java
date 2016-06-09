@@ -9,6 +9,9 @@ import android.view.View;
  * Created by J.Wolter on 09.06.2016.
  */
 public class CalendarLayoutManager extends RecyclerView.LayoutManager {
+  /* View Removal Constants */
+  private static final int REMOVE_VISIBLE = 0;
+  private static final int REMOVE_INVISIBLE = 1;
   private static final int DEFAULT_COUNT = 1;
   /* Fill Direction Constants */
   private static final int DIRECTION_NONE = -1;
@@ -57,11 +60,87 @@ public class CalendarLayoutManager extends RecyclerView.LayoutManager {
     //Clear all attached views into the recycle bin
     detachAndScrapAttachedViews(recycler);
     //Fill the grid for the initial layout of views
-    fillGrid(DIRECTION_NONE, childLeft, childTop, recycler);
+    fillGrid(DIRECTION_NONE, childLeft, childTop, recycler, state, null);
   }
 
-  private void fillGrid (int direction, int childLeft, int childTop,  RecyclerView.Recycler recycler ) {
-    
+  private void fillGrid (int direction, int childLeft, int childTop,  RecyclerView.Recycler recycler,RecyclerView.State state, SparseIntArray removedPositions) {
+
+
+    if (mFirstVisiblePosition < 0) {
+      mFirstVisiblePosition = 0;
+    }
+    if (mFirstVisiblePosition >= getItemCount()) {
+      mFirstVisiblePosition = (getItemCount() - 1);
+    }
+
+    SparseArray<View> viewCache = new SparseArray<View>(getChildCount());
+    int startLeftOffset = childLeft;
+    int startTopOffset = childTop;
+    //TODO: detach all exsisting views
+
+         /*
+         * Next, we advance the visible position based on the fill direction.
+         * DIRECTION_NONE doesn't advance the position in any direction.
+         */
+    switch (direction) {
+      case DIRECTION_START:
+        mFirstVisiblePosition--;
+        break;
+      case DIRECTION_END:
+        mFirstVisiblePosition++;
+        break;
+      case DIRECTION_UP:
+        mFirstVisiblePosition -= getTotalColumnCount();
+        break;
+      case DIRECTION_DOWN:
+        mFirstVisiblePosition += getTotalColumnCount();
+        break;
+    }
+
+       /*
+         * Next, we supply the grid of items that are deemed visible.
+         * If these items were previously there, they will simply be
+         * re-attached. New views that must be created are obtained
+         * from the Recycler and added.
+         */
+    int leftOffset = startLeftOffset;
+    int topOffset = startTopOffset;
+
+    for (int i = 0; i < getVisibleChildCount(); i++) {
+      int nextPosition = positionOfIndex(i);
+      int offsetPositionDelta = 0;
+
+      if (state.isPreLayout()) {
+        int offsetPosition = nextPosition;
+
+        for (int offset = 0; offset < removedPositions.size(); offset++) {
+          //Look for off-screen removals that are less-than this
+          if (removedPositions.valueAt(offset) == REMOVE_INVISIBLE
+                  && removedPositions.keyAt(offset) < nextPosition) {
+            //Offset position to match
+            offsetPosition--;
+          }
+        }
+        offsetPositionDelta = nextPosition - offsetPosition;
+        nextPosition = offsetPosition;
+      }
+
+    }
+  }
+
+  private int getVisibleChildCount() {
+    return mVisibleColumnCount * mVisibleRowCount;
+  }
+
+  /*
+ * Mapping between child view indices and adapter data
+ * positions helps fill the proper views during scrolling.
+ */
+  private int positionOfIndex(int childIndex) {
+    int row = childIndex / mVisibleColumnCount;
+    int column = childIndex % mVisibleColumnCount;
+
+    return mFirstVisiblePosition + (row * getTotalColumnCount()) + column;
   }
 
 
