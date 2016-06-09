@@ -10,7 +10,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-  RecyclerView myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+  RecyclerView myRecyclerView;
+  MyRecyclerViewAdapter myRecyclerViewAdapter;
   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
   List<MyDate> listOfMyDates = new ArrayList<>();
   MyDate dateOne = new MyDate(2000,1,1);
@@ -22,9 +23,12 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     myRecyclerView.setLayoutManager(linearLayoutManager);
     listOfMyDates.add(dateOne);
     listOfMyDates.add(dateTwo);
     listOfMyDates.add(dateThree);
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(listOfMyDates);
+    myRecyclerView.setAdapter(myRecyclerViewAdapter);
   }
 }

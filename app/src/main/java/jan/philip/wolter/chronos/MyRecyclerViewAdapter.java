@@ -1,14 +1,23 @@
 package jan.philip.wolter.chronos;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by J.Wolter on 09.06.2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyDateViewHolder> {
+
+  private List<MyDate> listOfmyDates;
+
+  public MyRecyclerViewAdapter (List<MyDate> listOfmyDates) {
+    this.listOfmyDates = listOfmyDates;
+  }
 
   public static class MyDateViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,20 +35,25 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
   @Override
   public MyDateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return null;
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_date_view_group, parent, false);
+    MyDateViewHolder myDateViewHolder = new MyDateViewHolder(view);
+    return myDateViewHolder;
   }
 
   @Override
   public void onBindViewHolder(MyDateViewHolder holder, int position) {
-
+    holder.year.setText("Year = " + listOfmyDates.get(position).getYear());
+    holder.month.setText("Month =" + listOfmyDates.get(position).getMonth());
+    holder.dayOfWeek.setText("Day = " + listOfmyDates.get(position).getDayOfWeek());
   }
 
   @Override
   public int getItemCount() {
-    return 0;
+    return listOfmyDates.size();
   }
 
-
-
-
+  @Override
+  public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    super.onAttachedToRecyclerView(recyclerView);
+  }
 }
