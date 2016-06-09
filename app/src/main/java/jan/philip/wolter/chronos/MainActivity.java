@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     myRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+    dateFour.setEvent("Dies ist ein Test");
     listOfMyDates.add(dateOne);
     listOfMyDates.add(dateTwo);
     listOfMyDates.add(dateFour);

@@ -24,12 +24,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     TextView year;
     TextView month;
     TextView dayOfWeek;
+    TextView event;
 
     public MyDateViewHolder(View itemView) {
       super(itemView);
       year = (TextView)itemView.findViewById(R.id.year);
       month = (TextView)itemView.findViewById(R.id.month);
       dayOfWeek = (TextView)itemView.findViewById(R.id.day);
+      event = (TextView)itemView.findViewById(R.id.event);
     }
   }
 
@@ -45,6 +47,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     holder.year.setText("Year = " + listOfmyDates.get(position).getYear());
     holder.month.setText("Month =" + listOfmyDates.get(position).getMonth());
     holder.dayOfWeek.setText("Day = " + listOfmyDates.get(position).getDayOfWeek());
+    if (listOfmyDates.get(position).getEvent() != null) {
+      holder.event.setText("Event = " + listOfmyDates.get(position).getEvent());
+    }
   }
 
   @Override

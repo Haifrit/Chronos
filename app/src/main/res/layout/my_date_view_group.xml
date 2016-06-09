@@ -32,4 +32,13 @@
         android:layout_below="@+id/month"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/event"
+        android:layout_below="@+id/month"
+        android:layout_toRightOf="@+id/day"
+        />
 </RelativeLayout>

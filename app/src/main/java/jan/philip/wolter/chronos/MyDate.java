@@ -7,6 +7,7 @@ public class MyDate {
   private int year;
   private int month;
   private int dayOfWeek;
+  private String event;
 
   public MyDate(int year, int month, int dayOfWeek) {
     this.year = year;
@@ -25,4 +26,13 @@ public class MyDate {
   public int getDayOfWeek() {
     return dayOfWeek;
   }
+
+  public void setEvent(String event) {
+    this.event = event;
+  }
+
+  public String getEvent() {
+    return event;
+  }
+
 }
