@@ -59,7 +59,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     holder.year.setText("Year = " + listOfmyDates.get(position).getYear());
     holder.month.setText("Month =" + listOfmyDates.get(position).getMonth());
     holder.dayOfWeek.setText("Day = " + listOfmyDates.get(position).getDayOfWeek());
-    holder.imageView.setImageResource(R.drawable.may15);
+    //holder.imageView.setImageResource(R.drawable.may15);
     if (listOfmyDates.get(position).getEvent() != null) {
 
       holder.event.setText("Event = " + listOfmyDates.get(position).getEvent());

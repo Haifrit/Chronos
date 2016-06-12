@@ -7,22 +7,22 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-
 import org.lucasr.twowayview.widget.TwoWayView;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+  final Calendar calendar = Calendar.getInstance();
   TwoWayView myRecyclerView;
   MyRecyclerViewAdapter myRecyclerViewAdapter;
   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
   StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
   CalendarLayoutManager calendarLayoutManager = new CalendarLayoutManager();
   List<MyDate> listOfMyDates = new ArrayList<>();
+  //Selected Month will be the current Month by app start
+  List<MyDate> selectedMonth = new ArrayList<>();
   MyDate dateOne = new MyDate(2000,1,1);
   MyDate dateTwo = new MyDate(3000,2,2);
   MyDate dateThree = new MyDate(1999,2,2);
@@ -32,26 +32,24 @@ public class MainActivity extends AppCompatActivity {
   View viewForTouchListener;
   float downXValue = 0;
   float downYValue = 0;
-  static final String LOG_TAG = "MainAcrivity";
-
-
+  static final String LOG_TAG = "MainActivity";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-
     myRecyclerView = (TwoWayView) findViewById(R.id.list);
 
     fillDummyData();
 
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(listOfMyDates);
-    myRecyclerView.setAdapter(myRecyclerViewAdapter);
+
 
     setTouchListenerForRecyclerView();
+    getDatesForSelectedMonth();
 
-
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(selectedMonth);
+    myRecyclerView.setAdapter(myRecyclerViewAdapter);
   }
 
 
@@ -92,9 +90,22 @@ public class MainActivity extends AppCompatActivity {
             break;
           }
         }
-        return true;
+        // Returning False here enables the ListView to scroll
+        return false;
       }
     });
+  }
+
+  private void getDatesForSelectedMonth () {
+    int days = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    int month = calendar.get(Calendar.MONTH);
+    int year = calendar.get(Calendar.YEAR);
+    Log.d(LOG_TAG, "Tage im aktuellem Monat = " + days);
+    for (int i = 1; i <= days; i++) {
+      Log.d(LOG_TAG, "Tage hinzugefügt = " + i);
+      MyDate myDate = new MyDate(year,month,i);
+      selectedMonth.add(myDate);
+    }
   }
 
 
