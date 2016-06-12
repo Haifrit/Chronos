@@ -22,15 +22,8 @@ public class MainActivity extends AppCompatActivity {
   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
   StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
   CalendarLayoutManager calendarLayoutManager = new CalendarLayoutManager();
-  List<MyDate> listOfMyDates = new ArrayList<>();
   //Selected Month will be the current Month by app start
   List<MyDate> datesOfSelectedMonth = new ArrayList<>();
-  MyDate dateOne = new MyDate(2000,1,1);
-  MyDate dateTwo = new MyDate(3000,2,2);
-  MyDate dateThree = new MyDate(1999,2,2);
-  MyDate dateFour = new MyDate(2001,1,1);
-  MyDate dateFive = new MyDate(3001,2,2);
-  MyDate dateSix = new MyDate(1998,2,2);
   View viewForTouchListener;
   float downXValue = 0;
   float downYValue = 0;
@@ -44,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     myRecyclerView = (TwoWayView) findViewById(R.id.list);
 
     initializeDate();
-    fillDummyData();
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
@@ -112,19 +104,6 @@ public class MainActivity extends AppCompatActivity {
       MyDate myDate = new MyDate(year,month,i);
       datesOfSelectedMonth.add(myDate);
     }
-  }
-
-
-  private void fillDummyData () {
-
-    dateFour.setEvent("Dies ist ein Test");
-    listOfMyDates.add(dateOne);
-    listOfMyDates.add(dateTwo);
-    listOfMyDates.add(dateFour);
-    listOfMyDates.add(dateFive);
-    listOfMyDates.add(dateSix);
-    listOfMyDates.add(dateThree);
-
   }
 
   private void incrementMonth () {
