@@ -71,11 +71,17 @@ public class MainActivity extends AppCompatActivity {
               if (downXValue < currentX) {
                 Log.d(LOG_TAG, "Motion Action = RIGHT");
                 incrementMonth();
+                getDatesForSelectedMonth();
+                myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
+                myRecyclerView.setAdapter(myRecyclerViewAdapter);
               }
               // going forwards: pushing stuff to the left
               if (downXValue > currentX) {
                 Log.d(LOG_TAG, "Motion Action = LEFT");
                 decrementMonth();
+                getDatesForSelectedMonth();
+                myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
+                myRecyclerView.setAdapter(myRecyclerViewAdapter);
               }
             } else {
               if (downYValue < currentY) {
@@ -99,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     int month = calendar.get(Calendar.MONTH);
     int year = calendar.get(Calendar.YEAR);
     Log.d(LOG_TAG, "Tage im aktuellem Monat = " + days);
+    datesOfSelectedMonth.clear();
     for (int i = 1; i <= days; i++) {
       Log.d(LOG_TAG, "Tage hinzugefügt = " + i);
       MyDate myDate = new MyDate(year,month,i);
@@ -127,6 +134,4 @@ public class MainActivity extends AppCompatActivity {
     calendar.set(Calendar.MONTH, selectedMonth);
     Log.d(LOG_TAG, "--- Der aktuelle Monat ist = " + calendar.get(Calendar.MONTH));
   }
-
-
 }
