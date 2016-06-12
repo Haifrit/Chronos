@@ -15,6 +15,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
   final Calendar calendar = Calendar.getInstance();
+  int selectedYear;
+  int selectedMonth;
   TwoWayView myRecyclerView;
   MyRecyclerViewAdapter myRecyclerViewAdapter;
   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
   CalendarLayoutManager calendarLayoutManager = new CalendarLayoutManager();
   List<MyDate> listOfMyDates = new ArrayList<>();
   //Selected Month will be the current Month by app start
-  List<MyDate> selectedMonth = new ArrayList<>();
+  List<MyDate> datesOfSelectedMonth = new ArrayList<>();
   MyDate dateOne = new MyDate(2000,1,1);
   MyDate dateTwo = new MyDate(3000,2,2);
   MyDate dateThree = new MyDate(1999,2,2);
@@ -41,17 +43,19 @@ public class MainActivity extends AppCompatActivity {
 
     myRecyclerView = (TwoWayView) findViewById(R.id.list);
 
+    initializeDate();
     fillDummyData();
-
-
-
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(selectedMonth);
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
   }
 
+  private void initializeDate () {
+    selectedYear = calendar.get(Calendar.YEAR);
+    selectedMonth = calendar.get(Calendar.MONTH);
+  }
 
   private void setTouchListenerForRecyclerView () {
     viewForTouchListener = findViewById(R.id.list);
@@ -74,10 +78,12 @@ public class MainActivity extends AppCompatActivity {
               // going backwards: pushing stuff to the right
               if (downXValue < currentX) {
                 Log.d(LOG_TAG, "Motion Action = RIGHT");
+                incrementMonth();
               }
               // going forwards: pushing stuff to the left
               if (downXValue > currentX) {
                 Log.d(LOG_TAG, "Motion Action = LEFT");
+                decrementMonth();
               }
             } else {
               if (downYValue < currentY) {
@@ -104,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     for (int i = 1; i <= days; i++) {
       Log.d(LOG_TAG, "Tage hinzugefügt = " + i);
       MyDate myDate = new MyDate(year,month,i);
-      selectedMonth.add(myDate);
+      datesOfSelectedMonth.add(myDate);
     }
   }
 
@@ -119,6 +125,28 @@ public class MainActivity extends AppCompatActivity {
     listOfMyDates.add(dateSix);
     listOfMyDates.add(dateThree);
 
+  }
+
+  private void incrementMonth () {
+    selectedMonth++;
+    if (selectedMonth > 11) {
+      selectedMonth = 0;
+      selectedYear++;
+    }
+    calendar.set(Calendar.YEAR, selectedYear);
+    calendar.set(Calendar.MONTH, selectedMonth);
+    Log.d(LOG_TAG, "+++ Der aktuelle Monat ist = " + calendar.get(Calendar.MONTH));
+  }
+
+  private void decrementMonth () {
+    selectedMonth--;
+    if (selectedMonth < 0) {
+      selectedMonth = 11;
+      selectedYear--;
+    }
+    calendar.set(Calendar.YEAR, selectedYear);
+    calendar.set(Calendar.MONTH, selectedMonth);
+    Log.d(LOG_TAG, "--- Der aktuelle Monat ist = " + calendar.get(Calendar.MONTH));
   }
 
 
