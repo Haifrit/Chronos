@@ -51,6 +51,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
   @Override
   public void onBindViewHolder(MyDateViewHolder holder, int position) {
     final View itemView = holder.itemView;
+    final SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
+    layoutParams.rightMargin = 4;
+    layoutParams.leftMargin = 4;
+    layoutParams.topMargin = 4;
+    layoutParams.bottomMargin = 4;
     holder.year.setText("Year = " + listOfmyDates.get(position).getYear());
     holder.month.setText("Month =" + listOfmyDates.get(position).getMonth());
     holder.dayOfWeek.setText("Day = " + listOfmyDates.get(position).getDayOfWeek());
@@ -58,9 +63,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     if (listOfmyDates.get(position).getEvent() != null) {
 
       holder.event.setText("Event = " + listOfmyDates.get(position).getEvent());
-      final SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
-      layoutParams.colSpan = 3;
-      layoutParams.rowSpan = 3;
+
+      layoutParams.colSpan = 2;
+      layoutParams.rowSpan = 2;
+
       itemView.setLayoutParams(layoutParams);
     }
   }
