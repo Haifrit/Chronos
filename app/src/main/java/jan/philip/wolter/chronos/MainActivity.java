@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import jan.philip.wolter.chronos.jan.philip.wolter.database.ChronosDataSource;
+
 public class MainActivity extends AppCompatActivity {
 
   final Calendar calendar = Calendar.getInstance();
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
   float downYValue = 0;
   static final String LOG_TAG = "MainActivity";
 
+  ChronosDataSource chronosDataSource;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
+
+    chronosDataSource = new ChronosDataSource(this);
+    chronosDataSource.open();
+    chronosDataSource.close();
   }
 
   private void initializeDate () {
