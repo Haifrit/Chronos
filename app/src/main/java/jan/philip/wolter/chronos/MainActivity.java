@@ -66,17 +66,13 @@ public class MainActivity extends AppCompatActivity {
               if (downXValue < currentX) {
                 Log.d(LOG_TAG, "Motion Action = RIGHT");
                 decrementMonth();
-                getDatesForSelectedMonth();
-                myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
-                myRecyclerView.setAdapter(myRecyclerViewAdapter);
+                refreshAdapter();
               }
               // going forwards: pushing stuff to the left
               if (downXValue > currentX) {
                 Log.d(LOG_TAG, "Motion Action = LEFT");
                 incrementMonth();
-                getDatesForSelectedMonth();
-                myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
-                myRecyclerView.setAdapter(myRecyclerViewAdapter);
+                refreshAdapter();
               }
             } else {
               if (downYValue < currentY) {
@@ -129,4 +125,11 @@ public class MainActivity extends AppCompatActivity {
     calendar.set(Calendar.MONTH, selectedMonth);
     Log.d(LOG_TAG, "--- Der aktuelle Monat ist = " + calendar.get(Calendar.MONTH));
   }
+
+  private void refreshAdapter () {
+    getDatesForSelectedMonth();
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
+    myRecyclerView.setAdapter(myRecyclerViewAdapter);
+  }
+
 }
