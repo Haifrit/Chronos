@@ -2,8 +2,11 @@ package jan.philip.wolter.chronos.jan.philip.wolter.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.HashMap;
 
 import jan.philip.wolter.chronos.MyDate;
 
@@ -50,6 +53,36 @@ public class ChronosDataSource {
     Log.d(LOG_TAG, "MyDate Als Int = " + myDate.getDateAsInt());
     database.insert(DBHelper.TABLE_EVENT_LIST, null, values);
     Log.d(LOG_TAG, "Event in die Datenbank geschrieben ");
+  }
+
+  public HashMap<Integer,MyEvent> getEventsForDate (MyDate minDateInMonth, MyDate maxDateInMonth) {
+
+    HashMap<Integer,MyEvent> mapOfEvents = new HashMap<>();
+    Cursor cursor = database.rawQuery(DBHelper.SQL_QUERY_EVENTS_ON_DATE, new String[]{String.valueOf(minDateInMonth),String.valueOf(maxDateInMonth)});
+    cursor.moveToFirst();
+
+    while (cursor.isAfterLast() == false) {
+
+      int idIndex = cursor.getColumnIndex(DBHelper.COLUMN_EVENT_ID);
+      int idDate = cursor.getColumnIndex(DBHelper.COLUMN_DATE);
+      int idText = cursor.getColumnIndex(DBHelper.COLUMN_EVENT_TEXT);
+      int idHour = cursor.getColumnIndex(DBHelper.COLUMN_EVENT_HOUR);
+      int idMinute = cursor.getColumnIndex(DBHelper.COLUMN_EVENT_MINUTE);
+
+      int indexId = cursor.getInt(idIndex);
+      String text = cursor.getString(idText);
+      int date = cursor.getInt(idDate);
+      int hour = cursor.getInt(idHour);
+      int minute = cursor.getInt(idMinute);
+
+      MyEvent myEvent = new MyEvent(hour,minute);
+      myEvent.setEventText(text);
+      mapOfEvents.put(date,myEvent);
+      Log.d(LOG_TAG, "erfolgreich gelesen " + myEvent.getEventText());
+
+      cursor.moveToNext();
+    }
+    return  mapOfEvents;
   }
 
   public void open() {

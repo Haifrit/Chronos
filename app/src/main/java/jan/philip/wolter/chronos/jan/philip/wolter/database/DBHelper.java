@@ -46,6 +46,18 @@ public class DBHelper extends SQLiteOpenHelper {
                   "(" + COLUMN_DATE + " INTEGER PRIMARY KEY NOT NULL , " +
                   "FOREIGN KEY(" + COLUMN_DATE +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE + "));";
 
+  //Raw SQL Querys ( benutzen mit database.rawQuery )
+
+  //Raw SQL Query um alle events zu erhalten die es zu einem vorher spezifiziertem Datum gibt
+  public static final String SQL_QUERY_EVENTS_ON_DATE = "SELECT event_list." + COLUMN_EVENT_ID
+          + ", event_list." + COLUMN_EVENT_DATE
+          + ", event_list." + COLUMN_EVENT_TEXT
+          + ", event_list." + COLUMN_EVENT_HOUR
+          + ", event_list." + COLUMN_EVENT_MINUTE
+          + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_DATE_LIST
+          + " ON event_list." + COLUMN_EVENT_DATE + " = " + "date_list." + COLUMN_DATE
+          + " WHERE event_list." + COLUMN_EVENT_DATE + " >=? AND <=?";
+
 
   public DBHelper(Context context){
   super(context, DB_NAME, null, DB_VERSION);
