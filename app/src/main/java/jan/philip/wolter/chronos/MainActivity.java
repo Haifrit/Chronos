@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
               // going backwards: pushing stuff to the right
               if (downXValue < currentX) {
                 Log.d(LOG_TAG, "Motion Action = RIGHT");
-                incrementMonth();
+                decrementMonth();
                 getDatesForSelectedMonth();
                 myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
                 myRecyclerView.setAdapter(myRecyclerViewAdapter);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
               // going forwards: pushing stuff to the left
               if (downXValue > currentX) {
                 Log.d(LOG_TAG, "Motion Action = LEFT");
-                decrementMonth();
+                incrementMonth();
                 getDatesForSelectedMonth();
                 myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
                 myRecyclerView.setAdapter(myRecyclerViewAdapter);
