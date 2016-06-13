@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.lucasr.twowayview.widget.SpannableGridLayoutManager;
@@ -29,7 +28,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     TextView month;
     TextView dayOfWeek;
     TextView event;
-    ImageView imageView;
 
     public MyDateViewHolder(View itemView) {
       super(itemView);
@@ -37,7 +35,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
       month = (TextView)itemView.findViewById(R.id.month);
       dayOfWeek = (TextView)itemView.findViewById(R.id.day);
       event = (TextView)itemView.findViewById(R.id.event);
-      imageView = (ImageView) itemView.findViewById(R.id.imageView);
     }
   }
 
@@ -56,9 +53,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     layoutParams.leftMargin = 4;
     layoutParams.topMargin = 4;
     layoutParams.bottomMargin = 4;
-    holder.year.setText("Year = " + listOfmyDates.get(position).getYear());
-    holder.month.setText("Month =" + listOfmyDates.get(position).getMonth());
-    holder.dayOfWeek.setText("Day = " + listOfmyDates.get(position).getDayOfWeek());
+    holder.year.setText("" + listOfmyDates.get(position).getYear());
+    holder.month.setText("" + listOfmyDates.get(position).getMonthAsString());
+    holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfWeek());
     //holder.imageView.setImageResource(R.drawable.may15);
 //    if (listOfmyDates.get(position).getEvent() != null) {
 //

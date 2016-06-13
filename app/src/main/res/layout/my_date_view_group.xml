@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ff0000">
+                android:background="#ffffff">
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,9 +10,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="year"
         android:id="@+id/year"
+        android:background="#ff0000"
+        android:textSize="10dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/event"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,9 +23,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="month"
         android:id="@+id/month"
-        android:layout_below="@+id/year"
+        android:background="#ff0000"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/year"
+        android:layout_toLeftOf="@+id/year"
+        android:textSize="18dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,9 +37,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="day of week"
         android:id="@+id/day"
-        android:layout_below="@+id/month"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:textColor="#000000"
+        android:layout_below="@+id/placeholder"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,14 +50,13 @@
         android:layout_toRightOf="@+id/day"
         />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/event"
-        android:layout_alignEnd="@+id/event"
-        android:layout_alignBottom="@+id/day"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/placeholder"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="1dp"/>
+
 </RelativeLayout>
