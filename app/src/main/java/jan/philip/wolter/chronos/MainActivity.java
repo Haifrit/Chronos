@@ -11,8 +11,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import jan.philip.wolter.chronos.jan.philip.wolter.database.ChronosDataSource;
+import jan.philip.wolter.chronos.jan.philip.wolter.database.MyEvent;
 
 public class MainActivity extends AppCompatActivity {
+
+  MyEvent myEvent;
+  MyDate myDate;
 
   final Calendar calendar = Calendar.getInstance();
   int selectedYear;
@@ -44,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
     chronosDataSource = new ChronosDataSource(this);
     chronosDataSource.open();
+    myEvent = new MyEvent(10,10);
+    myDate = new MyDate(2000,10,6);
+    chronosDataSource.insertDate(myDate.getDateAsInt());
+    chronosDataSource.insertEvent(myEvent,myDate);
     chronosDataSource.close();
   }
 

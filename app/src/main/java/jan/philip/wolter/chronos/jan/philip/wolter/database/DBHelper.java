@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
                   COLUMN_EVENT_TEXT + " TEXT NOT NULL, " +
                   COLUMN_EVENT_HOUR + " INTEGER NOT NULL, " +
                   COLUMN_EVENT_MINUTE + " INTEGER NOT NULL, " +
-                  COLUMN_EVENT_DATE + " TEXT NOT NULL);";
+                  COLUMN_EVENT_DATE + " INTEGER NOT NULL);";
 
   //Tabelle für Datum/Daten an denen es Events gibt
   public static final String TABLE_DATE_LIST = "date_list";
@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
   //SQL Create String für die Member of Event Tabelle
   public static final String SQL_CREATE_DATE =
           "CREATE TABLE " + TABLE_DATE_LIST +
-                  "(" + COLUMN_DATE + " TEXT NOT NULL PRIMARY KEY, " +
+                  "(" + COLUMN_DATE + " INTEGER PRIMARY KEY NOT NULL , " +
                   "FOREIGN KEY(" + COLUMN_DATE +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE + "));";
 
 

@@ -18,4 +18,16 @@ public class MyEvent {
   public void setEventText(String eventText) {
     this.eventText = eventText;
   }
+
+  public int getHour() {
+    return hour;
+  }
+
+  public int getMinute() {
+    return minute;
+  }
+
+  public String getEventText() {
+    return eventText;
+  }
 }

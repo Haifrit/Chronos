@@ -36,4 +36,9 @@ public class MyDate {
   public void addEvent (MyEvent myEvent) {
     listOfEvents.add(myEvent);
   }
+
+  public int getDateAsInt() {
+    String date = "" + year + month + dayOfWeek;
+    return Integer.parseInt(date);
+  }
 }
