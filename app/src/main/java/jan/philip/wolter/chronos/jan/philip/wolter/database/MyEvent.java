@@ -1,4 +1,4 @@
-package jan.philip.wolter.database;
+package jan.philip.wolter.chronos.jan.philip.wolter.database;
 
 /**
  * Created by J.Wolter on 13.06.2016.
@@ -12,7 +12,7 @@ public class MyEvent {
   public MyEvent(int hour, int minute) {
     this.hour = hour;
     this.minute = minute;
-    this.eventText = "Nothing yet";
+    this.eventText = "Nothing Yet";
   }
 
   public void setEventText(String eventText) {
