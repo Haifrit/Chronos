@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
           case MotionEvent.ACTION_DOWN: {
             // store the X value when the user's finger was pressed down
             downXValue = event.getX();
+            Log.d(LOG_TAG, "downXValue = " + downXValue);
             downYValue = event.getY();
+            Log.d(LOG_TAG, "downYValue = " + downYValue);
             break;
           }
           case MotionEvent.ACTION_UP: {
@@ -65,21 +67,50 @@ public class MainActivity extends AppCompatActivity {
               // going backwards: pushing stuff to the right
               if (downXValue < currentX) {
                 Log.d(LOG_TAG, "Motion Action = RIGHT");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
+
+
+                int savePosition = myRecyclerView.getFirstVisiblePosition();
+                Log.d(LOG_TAG, "savePosition = " + savePosition);
+
                 decrementMonth();
                 refreshAdapter();
+
+                Log.d(LOG_TAG, "Adapter Refreshed");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
+
+                myRecyclerView.scrollToPosition(savePosition);
               }
               // going forwards: pushing stuff to the left
               if (downXValue > currentX) {
                 Log.d(LOG_TAG, "Motion Action = LEFT");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
+
+                int savePosition = myRecyclerView.getFirstVisiblePosition();
+                Log.d(LOG_TAG, "savePosition = " + savePosition);
+
                 incrementMonth();
                 refreshAdapter();
+
+                Log.d(LOG_TAG, "Adapter Refreshed");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
+
+                myRecyclerView.scrollToPosition(savePosition);
               }
             } else {
               if (downYValue < currentY) {
                 Log.d(LOG_TAG, "Motion Action = DOWN ");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
               }
               if (downYValue > currentY) {
                 Log.d(LOG_TAG, "Motion Action = UP");
+                Log.d(LOG_TAG, "downXValue = " + downXValue);
+                Log.d(LOG_TAG, "downYValue = " + downYValue);
               }
             }
             break;
