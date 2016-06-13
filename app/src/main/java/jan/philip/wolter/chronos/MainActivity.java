@@ -2,8 +2,6 @@ package jan.philip.wolter.chronos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,9 +17,6 @@ public class MainActivity extends AppCompatActivity {
   int selectedMonth;
   TwoWayView myRecyclerView;
   MyRecyclerViewAdapter myRecyclerViewAdapter;
-  LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-  StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-  CalendarLayoutManager calendarLayoutManager = new CalendarLayoutManager();
   //Selected Month will be the current Month by app start
   List<MyDate> datesOfSelectedMonth = new ArrayList<>();
   View viewForTouchListener;
