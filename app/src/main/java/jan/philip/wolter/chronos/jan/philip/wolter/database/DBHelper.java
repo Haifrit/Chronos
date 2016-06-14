@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
   public static final String COLUMN_EVENT_HOUR = "event_hour";
   public static final String COLUMN_EVENT_MINUTE = "event_minute";
   public static final String COLUMN_EVENT_TEXT = "event_text";
-  public static final String COLUMN_EVENT_DATE = "event_date";
+  public static final String COLUMN_EVENT_DATE_ID = "event_date_id";
 
   //SQL Create String für die Event Tabelle
   public static final String SQL_CREATE_EVENT =
@@ -32,31 +32,33 @@ public class DBHelper extends SQLiteOpenHelper {
                   COLUMN_EVENT_TEXT + " TEXT NOT NULL, " +
                   COLUMN_EVENT_HOUR + " INTEGER NOT NULL, " +
                   COLUMN_EVENT_MINUTE + " INTEGER NOT NULL, " +
-                  COLUMN_EVENT_DATE + " INTEGER NOT NULL);";
+                  COLUMN_EVENT_DATE_ID + " INTEGER NOT NULL);";
 
   //Tabelle für Datum/Daten an denen es Events gibt
   public static final String TABLE_DATE_LIST = "date_list";
 
   //Spalten für die Tabelle Daten
+  public static final String COLUMN_DATE_ID = "date_id";
   public static final String COLUMN_DATE = "date_date";
 
   //SQL Create String für die Member of Event Tabelle
   public static final String SQL_CREATE_DATE =
           "CREATE TABLE " + TABLE_DATE_LIST +
-                  "(" + COLUMN_DATE + " INTEGER PRIMARY KEY UNIQUE NOT NULL , " +
-                  "FOREIGN KEY(" + COLUMN_DATE +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE + "));";
+                  "(" + COLUMN_DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        COLUMN_DATE + " INTEGER NOT NULL, " +
+                  "FOREIGN KEY(" + COLUMN_DATE_ID +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE_ID + "));";
 
   //Raw SQL Querys ( benutzen mit database.rawQuery )
 
   //Raw SQL Query um alle events zu erhalten die es zu einem vorher spezifiziertem Datum gibt
   public static final String SQL_QUERY_EVENTS_ON_DATE = "SELECT event_list." + COLUMN_EVENT_ID
-          + ", event_list." + COLUMN_EVENT_DATE
+          + ", event_list." + COLUMN_EVENT_DATE_ID
           + ", event_list." + COLUMN_EVENT_TEXT
           + ", event_list." + COLUMN_EVENT_HOUR
           + ", event_list." + COLUMN_EVENT_MINUTE
           + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_DATE_LIST
-          + " ON event_list." + COLUMN_EVENT_DATE + " = " + "date_list." + COLUMN_DATE
-          + " WHERE event_list." + COLUMN_EVENT_DATE + " >=? AND " + COLUMN_EVENT_DATE + " <=?";
+          + " ON event_list." + COLUMN_EVENT_DATE_ID + " = " + "date_list." + COLUMN_DATE
+          + " WHERE event_list." + COLUMN_EVENT_DATE_ID + " >=? AND " + COLUMN_EVENT_DATE_ID + " <=?";
 
 
   public DBHelper(Context context){

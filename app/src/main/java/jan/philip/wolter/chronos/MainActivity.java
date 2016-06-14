@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
-    minDate = new MyDate(2016,6,1);
+    minDate = new MyDate(1999,6,1);
     maxDate = new MyDate(2016,6,30);
 
     myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);

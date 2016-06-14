@@ -25,7 +25,7 @@ public class ChronosDataSource {
           DBHelper.COLUMN_EVENT_TEXT,
           DBHelper.COLUMN_EVENT_HOUR,
           DBHelper.COLUMN_EVENT_MINUTE,
-          DBHelper.COLUMN_EVENT_DATE
+          DBHelper.COLUMN_EVENT_DATE_ID
   };
 
   private String[] columns_date = {
@@ -49,7 +49,7 @@ public class ChronosDataSource {
     values.put(DBHelper.COLUMN_EVENT_HOUR, myEvent.getHour());
     values.put(DBHelper.COLUMN_EVENT_MINUTE, myEvent.getMinute());
     values.put(DBHelper.COLUMN_EVENT_TEXT, myEvent.getEventText());
-    values.put(DBHelper.COLUMN_EVENT_DATE, myDate.getDateAsInt());
+    values.put(DBHelper.COLUMN_EVENT_DATE_ID, myDate.getDateAsInt());
     Log.d(LOG_TAG, "MyDate Als Int = " + myDate.getDateAsInt());
     database.insert(DBHelper.TABLE_EVENT_LIST, null, values);
     Log.d(LOG_TAG, "Event in die Datenbank geschrieben ");
@@ -58,6 +58,9 @@ public class ChronosDataSource {
   public HashMap<Integer,MyEvent> getEventsForDate (MyDate minDateInMonth, MyDate maxDateInMonth) {
 
     HashMap<Integer,MyEvent> mapOfEvents = new HashMap<>();
+
+    Log.d(LOG_TAG, "RAW QUERY = " + database.rawQuery(DBHelper.SQL_QUERY_EVENTS_ON_DATE, new String[]{String.valueOf(minDateInMonth), String.valueOf(maxDateInMonth)}).toString());
+
     Cursor cursor = database.rawQuery(DBHelper.SQL_QUERY_EVENTS_ON_DATE, new String[]{String.valueOf(minDateInMonth),String.valueOf(maxDateInMonth)});
     cursor.moveToFirst();
 
