@@ -1,5 +1,6 @@
 package jan.philip.wolter.chronos;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,11 @@ import android.widget.TextView;
 
 import org.lucasr.twowayview.widget.SpannableGridLayoutManager;
 
+import java.util.HashMap;
 import java.util.List;
+
+import jan.philip.wolter.chronos.jan.philip.wolter.database.ChronosDataSource;
+import jan.philip.wolter.chronos.jan.philip.wolter.database.MyEvent;
 
 /**
  * Created by J.Wolter on 09.06.2016.
@@ -16,10 +21,16 @@ import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyDateViewHolder> {
 
+  GlobalDatabase globalDatabase;
+  ChronosDataSource chronosDataSource;
   private List<MyDate> listOfmyDates;
+  private Context mContext;
 
-  public MyRecyclerViewAdapter (List<MyDate> listOfmyDates) {
+  public MyRecyclerViewAdapter (List<MyDate> listOfmyDates, Context context) {
+    this.mContext = context;
     this.listOfmyDates = listOfmyDates;
+    globalDatabase = (GlobalDatabase) mContext.getApplicationContext();
+    this.chronosDataSource = globalDatabase.getChronosDataSource();
   }
 
   public static class MyDateViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +58,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
   @Override
   public void onBindViewHolder(MyDateViewHolder holder, int position) {
+
+    HashMap<Integer,MyEvent> listOfEvents = chronosDataSource.getEventsForMonth(listOfmyDates.get(position).getMonth(),listOfmyDates.get(position).getYear());
+
     final View itemView = holder.itemView;
     final SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
     layoutParams.rightMargin = 4;
@@ -55,7 +69,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     layoutParams.bottomMargin = 4;
     holder.year.setText("" + listOfmyDates.get(position).getYear());
     holder.month.setText("" + listOfmyDates.get(position).getMonthAsString());
-    holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfWeek());
+    holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfMonth());
     //holder.imageView.setImageResource(R.drawable.may15);
 //    if (listOfmyDates.get(position).getEvent() != null) {
 //

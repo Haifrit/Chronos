@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
   MyEvent myEvent;
   MyDate myDate;
 
+  GlobalDatabase globalDatabase;
   final Calendar calendar = Calendar.getInstance();
   int selectedYear;
   int selectedMonth;
@@ -37,22 +38,22 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    globalDatabase = (GlobalDatabase)getApplication();
+
     myRecyclerView = (TwoWayView) findViewById(R.id.list);
 
     initializeDate();
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, this);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
 
-    chronosDataSource = new ChronosDataSource(this);
-    chronosDataSource.open();
+    chronosDataSource = globalDatabase.getChronosDataSource();
     myEvent = new MyEvent(10,10);
-    myDate = new MyDate(2000,10,20);
+    myDate = new MyDate(2016,5,20);
     chronosDataSource.insertEvent(myEvent,myDate);
-    chronosDataSource.getEventsForMonth(10,2000);
-    chronosDataSource.close();
+    chronosDataSource.getEventsForMonth(5, 2016);
   }
 
   private void initializeDate () {
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void refreshAdapter () {
     getDatesForSelectedMonth();
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, this);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
   }
 
