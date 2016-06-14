@@ -15,6 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
   public static final String DB_NAME = "witenso.db";
   public static final int DB_VERSION = 1;
 
+
   //Tabelle für Events
   public static final String TABLE_EVENT_LIST = "event_list";
 
@@ -23,7 +24,44 @@ public class DBHelper extends SQLiteOpenHelper {
   public static final String COLUMN_EVENT_HOUR = "event_hour";
   public static final String COLUMN_EVENT_MINUTE = "event_minute";
   public static final String COLUMN_EVENT_TEXT = "event_text";
-  public static final String COLUMN_EVENT_DATE_ID = "event_date_id";
+  public static final String COLUMN_EVENT_MONTH_ID = "event_month_id";
+  public static final String COLUMN_EVENT_DAY = "event_day";
+
+  //Tabelle für Datum/Daten an denen es Events gibt
+  public static final String TABLE_MONTH_LIST = "month_list";
+
+  //Spalten für die Tabelle Daten
+  public static final String COLUMN_MONTH_ID = "month_id";
+  public static final String COLUMN_MONTH = "month_month";
+  public static final String COLUMN_YEAR = "month_year";
+
+  //SQL Create String für die Member of Event Tabelle
+  public static final String SQL_CREATE_MONTH =
+          "CREATE TABLE " + TABLE_MONTH_LIST +
+                  "(" + COLUMN_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        COLUMN_YEAR + " INTEGER NOT NULL , " +
+                        COLUMN_MONTH + " INTEGER NOT NULL, " +
+                        "UNIQUE (" + COLUMN_YEAR + "," + COLUMN_MONTH + ") ON CONFLICT REPLACE));";
+
+
+
+  //Raw SQL Querys ( benutzen mit database.rawQuery )
+
+  //Raw SQL Query um alle events zu erhalten die es zu einem vorher spezifiziertem Datum gibt
+  public static final String SQL_QUERY_EVENTS_IN_MONTH = "SELECT event_list." + COLUMN_EVENT_ID
+          + ", event_list." + COLUMN_EVENT_MONTH_ID
+          + ", event_list." + COLUMN_EVENT_TEXT
+          + ", event_list." + COLUMN_EVENT_HOUR
+          + ", event_list." + COLUMN_EVENT_MINUTE
+          + ", event_list." + COLUMN_EVENT_DAY
+          + ", month_list." + COLUMN_MONTH
+          + ", month_list." + COLUMN_YEAR
+          + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_MONTH_LIST
+          + " ON event_list." + COLUMN_EVENT_MONTH_ID + " = " + "date_list." + COLUMN_MONTH_ID
+          + " WHERE event_list." + COLUMN_MONTH + " =? AND " + COLUMN_YEAR + " =?";
+
+
+
 
   //SQL Create String für die Event Tabelle
   public static final String SQL_CREATE_EVENT =
@@ -32,34 +70,9 @@ public class DBHelper extends SQLiteOpenHelper {
                   COLUMN_EVENT_TEXT + " TEXT NOT NULL, " +
                   COLUMN_EVENT_HOUR + " INTEGER NOT NULL, " +
                   COLUMN_EVENT_MINUTE + " INTEGER NOT NULL, " +
-                  COLUMN_EVENT_DATE_ID + " INTEGER NOT NULL);";
-
-  //Tabelle für Datum/Daten an denen es Events gibt
-  public static final String TABLE_DATE_LIST = "date_list";
-
-  //Spalten für die Tabelle Daten
-  public static final String COLUMN_DATE_ID = "date_id";
-  public static final String COLUMN_DATE = "date_date";
-
-  //SQL Create String für die Member of Event Tabelle
-  public static final String SQL_CREATE_DATE =
-          "CREATE TABLE " + TABLE_DATE_LIST +
-                  "(" + COLUMN_DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                        COLUMN_DATE + " INTEGER NOT NULL, " +
-                  "FOREIGN KEY(" + COLUMN_DATE_ID +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE_ID + "));";
-
-  //Raw SQL Querys ( benutzen mit database.rawQuery )
-
-  //Raw SQL Query um alle events zu erhalten die es zu einem vorher spezifiziertem Datum gibt
-  public static final String SQL_QUERY_EVENTS_ON_DATE = "SELECT event_list." + COLUMN_EVENT_ID
-          + ", event_list." + COLUMN_EVENT_DATE_ID
-          + ", event_list." + COLUMN_EVENT_TEXT
-          + ", event_list." + COLUMN_EVENT_HOUR
-          + ", event_list." + COLUMN_EVENT_MINUTE
-          + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_DATE_LIST
-          + " ON event_list." + COLUMN_EVENT_DATE_ID + " = " + "date_list." + COLUMN_DATE
-          + " WHERE event_list." + COLUMN_EVENT_DATE_ID + " >=? AND " + COLUMN_EVENT_DATE_ID + " <=?";
-
+                  COLUMN_EVENT_DAY + " INTEGER NOT NULL, " +
+                  COLUMN_EVENT_MONTH_ID + " INTEGER NOT NULL)" +
+                  "FOREIGN KEY(" + COLUMN_EVENT_MONTH_ID +") REFERENCES " + TABLE_MONTH_LIST + "(" + COLUMN_MONTH_ID + "));";
 
   public DBHelper(Context context){
   super(context, DB_NAME, null, DB_VERSION);
@@ -71,8 +84,8 @@ public class DBHelper extends SQLiteOpenHelper {
     Log.d(LOG_TAG, "Die Tabelle Event wird mit SQL-Befehl: " + SQL_CREATE_EVENT + " angelegt.");
     db.execSQL(SQL_CREATE_EVENT);
 
-    Log.d(LOG_TAG, "Die Tabelle Date wird mit SQL-Befehl: " + SQL_CREATE_DATE + " angelegt.");
-    db.execSQL(SQL_CREATE_DATE);
+    Log.d(LOG_TAG, "Die Tabelle Date wird mit SQL-Befehl: " + SQL_CREATE_MONTH + " angelegt.");
+    db.execSQL(SQL_CREATE_MONTH);
 
   }
 
