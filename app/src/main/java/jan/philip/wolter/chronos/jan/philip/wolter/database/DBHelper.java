@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
                   "(" + COLUMN_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                         COLUMN_YEAR + " INTEGER NOT NULL , " +
                         COLUMN_MONTH + " INTEGER NOT NULL, " +
-                        "UNIQUE (" + COLUMN_YEAR + "," + COLUMN_MONTH + ") ON CONFLICT REPLACE));";
+                        "UNIQUE (" + COLUMN_YEAR + "," + COLUMN_MONTH + ") ON CONFLICT REPLACE);";
 
 
 
@@ -54,8 +54,6 @@ public class DBHelper extends SQLiteOpenHelper {
           + ", event_list." + COLUMN_EVENT_HOUR
           + ", event_list." + COLUMN_EVENT_MINUTE
           + ", event_list." + COLUMN_EVENT_DAY
-          + ", month_list." + COLUMN_MONTH
-          + ", month_list." + COLUMN_YEAR
           + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_MONTH_LIST
           + " ON event_list." + COLUMN_EVENT_MONTH_ID + " = " + "date_list." + COLUMN_MONTH_ID
           + " WHERE event_list." + COLUMN_MONTH + " =? AND " + COLUMN_YEAR + " =?";
@@ -71,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
                   COLUMN_EVENT_HOUR + " INTEGER NOT NULL, " +
                   COLUMN_EVENT_MINUTE + " INTEGER NOT NULL, " +
                   COLUMN_EVENT_DAY + " INTEGER NOT NULL, " +
-                  COLUMN_EVENT_MONTH_ID + " INTEGER NOT NULL)" +
+                  COLUMN_EVENT_MONTH_ID + " INTEGER NOT NULL," +
                   "FOREIGN KEY(" + COLUMN_EVENT_MONTH_ID +") REFERENCES " + TABLE_MONTH_LIST + "(" + COLUMN_MONTH_ID + "));";
 
   public DBHelper(Context context){

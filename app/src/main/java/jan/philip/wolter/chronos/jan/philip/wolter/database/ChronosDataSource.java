@@ -47,12 +47,13 @@ public class ChronosDataSource {
     Log.d(LOG_TAG, myDate  + " in die Datenbank geschrieben ");
   }
 
-  public void insertEvent (MyEvent myEvent, int monthId) {
+  public void insertEvent (MyEvent myEvent, int monthId, int dayOfMonth) {
     ContentValues values = new ContentValues();
     values.put(DBHelper.COLUMN_EVENT_HOUR, myEvent.getHour());
     values.put(DBHelper.COLUMN_EVENT_MINUTE, myEvent.getMinute());
     values.put(DBHelper.COLUMN_EVENT_TEXT, myEvent.getEventText());
     values.put(DBHelper.COLUMN_EVENT_MONTH_ID, monthId);
+    values.put(DBHelper.COLUMN_EVENT_DAY, dayOfMonth);
     Log.d(LOG_TAG, "monthId = " + monthId);
     database.insert(DBHelper.TABLE_EVENT_LIST, null, values);
     Log.d(LOG_TAG, "Event in die Datenbank geschrieben ");
