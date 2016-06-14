@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
   MyEvent myEvent;
   MyDate myDate;
-  MyDate minDate;
-  MyDate maxDate;
 
   final Calendar calendar = Calendar.getInstance();
   int selectedYear;
@@ -45,18 +43,14 @@ public class MainActivity extends AppCompatActivity {
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
-    minDate = new MyDate(1999,6,1);
-    maxDate = new MyDate(2016,6,30);
-
     myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
 
     chronosDataSource = new ChronosDataSource(this);
     chronosDataSource.open();
     myEvent = new MyEvent(10,10);
-    myDate = new MyDate(2000,10,6);
-    chronosDataSource.insertMonth(myDate);
-    chronosDataSource.insertEvent(myEvent, 0, 1);
+    myDate = new MyDate(2000,10,6,20);
+    chronosDataSource.insertEvent(myEvent,myDate);
     chronosDataSource.getEventsForMonth(10,2000);
     chronosDataSource.close();
   }
@@ -152,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
     datesOfSelectedMonth.clear();
     for (int i = 1; i <= days; i++) {
       Log.d(LOG_TAG, "Tage hinzugefügt = " + i);
-      MyDate myDate = new MyDate(year,month,i);
+      MyDate myDate = new MyDate(year,month,i,0);
+      //TODO: DayOfweek muss zu day of month werden
       datesOfSelectedMonth.add(myDate);
     }
   }

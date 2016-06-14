@@ -14,13 +14,15 @@ public class MyDate {
   private int year;
   private int month;
   private int dayOfWeek;
+  private int dayOfMonth;
   private List<MyEvent> listOfEvents;
   private Calendar calendar = Calendar.getInstance();
 
-  public MyDate(int year, int month, int dayOfWeek) {
+  public MyDate(int year, int month, int dayOfWeek, int dayOfMonth) {
     this.year = year;
     this.month = month;
     this.dayOfWeek = dayOfWeek;
+    this.dayOfMonth = dayOfMonth;
     listOfEvents = new ArrayList<>();
     calendar.set(Calendar.YEAR,this.year);
     calendar.set(Calendar.MONTH,this.month);
@@ -45,6 +47,10 @@ public class MyDate {
 
   public void addEvent (MyEvent myEvent) {
     listOfEvents.add(myEvent);
+  }
+
+  public int getDayOfMonth() {
+    return dayOfMonth;
   }
 
   public int getDateAsInt() {
