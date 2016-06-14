@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
   //SQL Create String für die Member of Event Tabelle
   public static final String SQL_CREATE_DATE =
           "CREATE TABLE " + TABLE_DATE_LIST +
-                  "(" + COLUMN_DATE + " INTEGER PRIMARY KEY NOT NULL , " +
+                  "(" + COLUMN_DATE + " INTEGER PRIMARY KEY UNIQUE NOT NULL , " +
                   "FOREIGN KEY(" + COLUMN_DATE +") REFERENCES " + TABLE_EVENT_LIST + "(" + COLUMN_EVENT_DATE + "));";
 
   //Raw SQL Querys ( benutzen mit database.rawQuery )
@@ -56,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
           + ", event_list." + COLUMN_EVENT_MINUTE
           + " FROM " + TABLE_EVENT_LIST + " INNER JOIN " + TABLE_DATE_LIST
           + " ON event_list." + COLUMN_EVENT_DATE + " = " + "date_list." + COLUMN_DATE
-          + " WHERE event_list." + COLUMN_EVENT_DATE + " >=? AND <=?";
+          + " WHERE event_list." + COLUMN_EVENT_DATE + " >=? AND " + COLUMN_EVENT_DATE + " <=?";
 
 
   public DBHelper(Context context){

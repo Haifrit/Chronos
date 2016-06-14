@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     myDate = new MyDate(2000,10,6);
     chronosDataSource.insertDate(myDate.getDateAsInt());
     chronosDataSource.insertEvent(myEvent,myDate);
-    //chronosDataSource.getEventsForDate(minDate,maxDate);
+    chronosDataSource.getEventsForDate(minDate,maxDate);
     chronosDataSource.close();
   }
 
