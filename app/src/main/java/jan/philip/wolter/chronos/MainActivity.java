@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     chronosDataSource = new ChronosDataSource(this);
     chronosDataSource.open();
     myEvent = new MyEvent(10,10);
-    myDate = new MyDate(2000,10,6,20);
+    myDate = new MyDate(2000,10,20);
     chronosDataSource.insertEvent(myEvent,myDate);
     chronosDataSource.getEventsForMonth(10,2000);
     chronosDataSource.close();
@@ -146,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
     datesOfSelectedMonth.clear();
     for (int i = 1; i <= days; i++) {
       Log.d(LOG_TAG, "Tage hinzugefügt = " + i);
-      MyDate myDate = new MyDate(year,month,i,0);
-      //TODO: DayOfweek muss zu day of month werden
+      MyDate myDate = new MyDate(year,month,i);
       datesOfSelectedMonth.add(myDate);
     }
   }

@@ -13,20 +13,18 @@ import jan.philip.wolter.chronos.jan.philip.wolter.database.MyEvent;
 public class MyDate {
   private int year;
   private int month;
-  private int dayOfWeek;
   private int dayOfMonth;
   private List<MyEvent> listOfEvents;
   private Calendar calendar = Calendar.getInstance();
 
-  public MyDate(int year, int month, int dayOfWeek, int dayOfMonth) {
+  public MyDate(int year, int month, int dayOfMonth) {
     this.year = year;
     this.month = month;
-    this.dayOfWeek = dayOfWeek;
     this.dayOfMonth = dayOfMonth;
     listOfEvents = new ArrayList<>();
     calendar.set(Calendar.YEAR,this.year);
     calendar.set(Calendar.MONTH,this.month);
-    calendar.set(Calendar.DAY_OF_WEEK,this.dayOfWeek);
+    calendar.set(Calendar.DAY_OF_MONTH,this.dayOfMonth);
   }
 
   public int getYear() {
@@ -41,10 +39,6 @@ public class MyDate {
     return month;
   }
 
-  public int getDayOfWeek() {
-    return dayOfWeek;
-  }
-
   public void addEvent (MyEvent myEvent) {
     listOfEvents.add(myEvent);
   }
@@ -54,7 +48,7 @@ public class MyDate {
   }
 
   public int getDateAsInt() {
-    String date = "" + year + month + dayOfWeek;
+    String date = "" + year + month + dayOfMonth;
     return Integer.parseInt(date);
   }
 }
