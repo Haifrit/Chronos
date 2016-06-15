@@ -70,6 +70,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     holder.year.setText("" + listOfmyDates.get(position).getYear());
     holder.month.setText("" + listOfmyDates.get(position).getMonthAsString());
     holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfMonth());
+
+    if (listOfEvents != null) {
+      if (listOfEvents.get(position) != null) {
+        layoutParams.colSpan = 3;
+        itemView.setLayoutParams(layoutParams);
+      }
+    }
+
     //holder.imageView.setImageResource(R.drawable.may15);
 //    if (listOfmyDates.get(position).getEvent() != null) {
 //
