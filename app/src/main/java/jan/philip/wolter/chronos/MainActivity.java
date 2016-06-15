@@ -8,6 +8,7 @@ import android.view.View;
 import org.lucasr.twowayview.widget.TwoWayView;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import jan.philip.wolter.chronos.jan.philip.wolter.database.ChronosDataSource;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
   MyEvent myEvent;
   MyDate myDate;
 
+  HashMap<Integer,MyEvent> listOfEvents = new HashMap<>();
   GlobalDatabase globalDatabase;
   final Calendar calendar = Calendar.getInstance();
   int selectedYear;
@@ -46,12 +48,14 @@ public class MainActivity extends AppCompatActivity {
     setTouchListenerForRecyclerView();
     getDatesForSelectedMonth();
 
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, this);
+    chronosDataSource = globalDatabase.getChronosDataSource();
+    listOfEvents = chronosDataSource.getEventsForMonth(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, listOfEvents, this);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
 
-    chronosDataSource = globalDatabase.getChronosDataSource();
+
     myEvent = new MyEvent(10,10);
-    myDate = new MyDate(2016,5,20);
+    myDate = new MyDate(2016,5,2);
     chronosDataSource.insertEvent(myEvent,myDate);
     chronosDataSource.getEventsForMonth(5, 2016);
   }
@@ -176,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
 
   private void refreshAdapter () {
     getDatesForSelectedMonth();
-    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, this);
+    listOfEvents = chronosDataSource.getEventsForMonth(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+    myRecyclerViewAdapter = new MyRecyclerViewAdapter(datesOfSelectedMonth, listOfEvents, this);
     myRecyclerView.setAdapter(myRecyclerViewAdapter);
   }
 

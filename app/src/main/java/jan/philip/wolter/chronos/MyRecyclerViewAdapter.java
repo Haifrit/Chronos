@@ -2,6 +2,7 @@ package jan.philip.wolter.chronos;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,17 @@ import jan.philip.wolter.chronos.jan.philip.wolter.database.MyEvent;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyDateViewHolder> {
 
+  static final String LOG_TAG = "MyAdapter";
   GlobalDatabase globalDatabase;
   ChronosDataSource chronosDataSource;
   private List<MyDate> listOfmyDates;
+  HashMap<Integer,MyEvent> listOfEvents;
   private Context mContext;
 
-  public MyRecyclerViewAdapter (List<MyDate> listOfmyDates, Context context) {
+  public MyRecyclerViewAdapter (List<MyDate> listOfmyDates, HashMap<Integer,MyEvent> listOfEvents, Context context) {
     this.mContext = context;
     this.listOfmyDates = listOfmyDates;
+    this.listOfEvents = listOfEvents;
     globalDatabase = (GlobalDatabase) mContext.getApplicationContext();
     this.chronosDataSource = globalDatabase.getChronosDataSource();
   }
@@ -59,24 +63,26 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
   @Override
   public void onBindViewHolder(MyDateViewHolder holder, int position) {
 
-    HashMap<Integer,MyEvent> listOfEvents = chronosDataSource.getEventsForMonth(listOfmyDates.get(position).getMonth(),listOfmyDates.get(position).getYear());
-
     final View itemView = holder.itemView;
     final SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
     layoutParams.rightMargin = 4;
     layoutParams.leftMargin = 4;
     layoutParams.topMargin = 4;
     layoutParams.bottomMargin = 4;
+    //Colspan muss hier gesetzt werden da der View mit Viewspan 3 wiederverwendet werden kann
+    layoutParams.colSpan = 1;
     holder.year.setText("" + listOfmyDates.get(position).getYear());
     holder.month.setText("" + listOfmyDates.get(position).getMonthAsString());
     holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfMonth());
 
     if (listOfEvents != null) {
-      if (listOfEvents.get(position) != null) {
+      if (listOfEvents.get(position + 1) != null) {
+        Log.d(LOG_TAG, "Colspan für Position = " + position + " erhöht");
         layoutParams.colSpan = 3;
-        itemView.setLayoutParams(layoutParams);
       }
     }
+
+    itemView.setLayoutParams(layoutParams);
 
     //holder.imageView.setImageResource(R.drawable.may15);
 //    if (listOfmyDates.get(position).getEvent() != null) {
