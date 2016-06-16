@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     myEvent = new MyEvent(10,10);
-    myDate = new MyDate(2016,5,2);
+    myDate = new MyDate(2016,5,1);
+    myDate = new MyDate(2016,5,30);
     chronosDataSource.insertEvent(myEvent,myDate);
     chronosDataSource.getEventsForMonth(5, 2016);
   }

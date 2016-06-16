@@ -62,9 +62,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
   @Override
   public void onBindViewHolder(MyDateViewHolder holder, int position) {
-
-    final View itemView = holder.itemView;
-    final SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
+    Log.d(LOG_TAG, "View für Position = " + position + " wird erstellt");
+    View itemView = holder.itemView;
+    SpannableGridLayoutManager.LayoutParams layoutParams = (SpannableGridLayoutManager.LayoutParams)  itemView.getLayoutParams();
     layoutParams.rightMargin = 4;
     layoutParams.leftMargin = 4;
     layoutParams.topMargin = 4;
@@ -73,27 +73,19 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     layoutParams.colSpan = 1;
     holder.year.setText("" + listOfmyDates.get(position).getYear());
     holder.month.setText("" + listOfmyDates.get(position).getMonthAsString());
-    holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfMonth());
+    //holder.dayOfWeek.setText("" + listOfmyDates.get(position).getDayOfMonth());
+    holder.dayOfWeek.setText("" + position);
 
     if (listOfEvents != null) {
       if (listOfEvents.get(position + 1) != null) {
-        Log.d(LOG_TAG, "Colspan für Position = " + position + " erhöht");
+        //Log.d(LOG_TAG, "Colspan für Position = " + position + " erhöht");
         layoutParams.colSpan = 3;
       }
     }
 
     itemView.setLayoutParams(layoutParams);
 
-    //holder.imageView.setImageResource(R.drawable.may15);
-//    if (listOfmyDates.get(position).getEvent() != null) {
-//
-//      holder.event.setText("Event = " + listOfmyDates.get(position).getEvent());
-//
-//      layoutParams.colSpan = 2;
 //      layoutParams.rowSpan = 2;
-//
-//      itemView.setLayoutParams(layoutParams);
-//    }
   }
 
   @Override
